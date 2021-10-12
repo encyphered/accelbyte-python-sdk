@@ -9,7 +9,7 @@ from ._token_repository import InMemoryTokenRepository
 from ._token_repository import MyTokenRepository
 
 from ._http_client import HttpClient
-from ._http_client import RequestsHttpClient
+from .http_client.requests import RequestsHttpClient
 
 from ._header import Header
 from ._http_response import HttpResponse
