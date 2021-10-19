@@ -10,6 +10,7 @@ from ._token_repository import MyTokenRepository
 
 from ._http_client import HttpClient
 from .http_client.requests import RequestsHttpClient
+from .http_client.httpx import HttpxHttpClient
 
 from ._header import Header
 from ._http_response import HttpResponse
@@ -32,6 +33,7 @@ _TOKEN_REPOSITORY_IMPL = [
 
 _HTTP_CLIENT_IMPL = [
     RequestsHttpClient,
+    HttpxHttpClient,
 ]
 
 
