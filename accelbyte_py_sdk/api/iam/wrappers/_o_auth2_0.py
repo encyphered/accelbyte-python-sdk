@@ -17,6 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 from ....core import get_namespace as get_services_namespace
 from ....core import run_request
+from ....core import run_request_async
 from ....core import same_doc_as
 
 from ..models import OauthapiRevocationList
@@ -128,6 +129,20 @@ def token_grant_v3(grant_type: str, device_id: Optional[str] = None, code: Optio
         refresh_token=refresh_token,
     )
     return run_request(request)
+
+
+@same_doc_as(TokenGrantV3)
+def token_grant_v3_async(grant_type: str, device_id: Optional[str] = None, code: Optional[str] = None, code_verifier: Optional[str] = None, client_id: Optional[str] = None, redirect_uri: Optional[str] = None, refresh_token: Optional[str] = None):
+    request = TokenGrantV3.create(
+        grant_type=grant_type,
+        device_id=device_id,
+        code=code,
+        code_verifier=code_verifier,
+        client_id=client_id,
+        redirect_uri=redirect_uri,
+        refresh_token=refresh_token,
+    )
+    return run_request_async(request)
 
 
 @same_doc_as(TokenIntrospectionV3)

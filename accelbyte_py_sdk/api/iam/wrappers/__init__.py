@@ -255,6 +255,7 @@ from ._o_auth2_0 import platform_token_grant_v3
 from ._o_auth2_0 import get_revocation_list_v3
 from ._o_auth2_0 import token_revocation_v3
 from ._o_auth2_0 import token_grant_v3
+from ._o_auth2_0 import token_grant_v3_async
 
 from ._sso_saml_2_0 import platform_authenticate_samlv3_handler
 

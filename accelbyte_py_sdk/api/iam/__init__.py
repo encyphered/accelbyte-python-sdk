@@ -263,6 +263,7 @@ from .wrappers import platform_token_grant_v3
 from .wrappers import get_revocation_list_v3
 from .wrappers import token_revocation_v3
 from .wrappers import token_grant_v3
+from .wrappers import token_grant_v3_async
 
 # sso_saml_2_0
 from .wrappers import platform_authenticate_samlv3_handler

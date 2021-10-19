@@ -287,4 +287,60 @@ def run_request(operation: Operation, base_url: Union[None, str] = None, headers
 
     return success, None
 
+
+async def run_request_async(operation: Operation, base_url: Union[None, str] = None, headers: Union[None, Header] = None, **kwargs) -> Tuple[Any, Any]:
+    http_client = get_http_client()
+
+    # TODO(elmer): fill up client_id, namespace only if operation needs it
+    # here
+
+    if base_url is None:
+        config_base_url, error = get_base_url()
+        if not error:
+            base_url = config_base_url
+
+    headers = headers if headers is not None else operation.get_headers()
+
+    if operation.security == "basic":
+        client_auth, error = get_client_auth()
+        if error:
+            return None, error
+        headers.add_basic_authorization2(client_auth)
+    elif operation.security == "bearer":
+        access_token, error = get_access_token()
+        if error:
+            return None, error
+        headers.add_bearer_authorization(access_token)
+
+    if operation.has_redirects() and "allow_redirects" not in kwargs:
+        kwargs["allow_redirects"] = False
+
+    request = http_client.create_request(operation, base_url, headers, **kwargs)
+
+    raw_response = await http_client.send_request(request, **kwargs)
+
+    response = http_client.handle_response(raw_response, **kwargs)
+
+    success, failure = operation.parse_response(*response)
+
+    if failure:
+        return None, failure
+
+    if operation.has_redirects() and operation.location_query:
+        query, error = get_query_from_http_redirect_response(success, operation.location_query)
+        if error:
+            return None, error
+        else:
+            return query, None
+
+    # # TODO(elmer): not a fan of this bit
+    if hasattr(success, "access_token"):
+        _, error = set_token(success)
+        if error:
+            return None, error
+        else:
+            return None, None
+
+    return success, None
+
 # endregion HttpClient
