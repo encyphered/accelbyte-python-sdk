@@ -17,6 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 from ....core import get_namespace as get_services_namespace
 from ....core import run_request
+from ....core import run_request_async
 from ....core import same_doc_as
 
 from ..models import HTTPValidationError
@@ -41,6 +42,14 @@ def protected_save_events_game_telemetry_v1_protected_events_post(body: Telemetr
         body=body,
     )
     return run_request(request)
+
+
+@same_doc_as(ProtectedSaveEventsGameTelemetryV1ProtectedEventsPost)
+def protected_save_events_game_telemetry_v1_protected_events_post_async(body: TelemetryBody):
+    request = ProtectedSaveEventsGameTelemetryV1ProtectedEventsPost.create(
+        body=body,
+    )
+    return run_request_async(request)
 
 
 @same_doc_as(ProtectedUpdatePlaytimeGameTelemetryV1ProtectedSteamIdsSteamIdPlaytimePlaytimePut)
